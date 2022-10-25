@@ -1,5 +1,6 @@
 export const SCREENS = {
   LOGIN: 'Login',
   PROFILE: 'Profile',
-  UPDATE_USER: 'UpdateUser'
+  UPDATE_USER: 'UpdateUser',
+  CREATE_USER: 'CreateUser'
 };

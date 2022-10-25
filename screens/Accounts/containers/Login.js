@@ -25,6 +25,7 @@ class LoginContainer extends Component {
   render() {
     return (
       <LoginComponent
+        {...this.props}
         submit={this.__submit}
         initialValues={{email: "fulano@gmail.com"}}
       />

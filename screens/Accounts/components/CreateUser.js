@@ -2,15 +2,13 @@ import { StyleSheet, ScrollView, Button, View } from 'react-native';
 import { InputField } from "../../../shared/fields";
 import { validateLogin } from "../validator";
 import { Form, Field } from 'react-final-form';
-import { SCREENS } from '../../../shared/constants';
 
-export const LoginComponent = props => {
-  const { submit, initialValues, navigation } = props;
+export const CreateUserComponent = props => {
+  const { submit, navigation } = props;
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Form
         onSubmit={data => submit(data)}
-        initialValues={initialValues}
         validate={validateLogin}
         render={({ handleSubmit, submitting, invalid }) => (
           <View style={styles.formGroup}>
@@ -21,21 +19,27 @@ export const LoginComponent = props => {
             />
 
             <Field
+              name="name"
+              placeholder="Nome do usuário"
+              component={InputField}
+            />
+
+            <Field
               secureTextEntry
               name="password"
-              placeholder="Senha"
+              placeholder="Senha de autenticação"
               component={InputField}
             />
 
             <Button
-              title="Entrar"
+              title="Criar"
               onPress={handleSubmit}
               disabled={submitting || invalid}
             />
           </View>
         )}
       />
-      <Button style={styles.button} title="Criar usuário" onPress={() => navigation.navigate(SCREENS.CREATE_USER)} />
+      <Button title="Voltar" onPress={() => navigation.goBack()} />
     </ScrollView>
   );
 }
@@ -50,8 +54,5 @@ const styles = StyleSheet.create({
   formGroup: {
     paddingLeft: 50,
     paddingRight: 50
-  },
-  button: {
-    marginTop: 20
   }
 });

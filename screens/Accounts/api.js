@@ -9,3 +9,8 @@ export function updateUserAPI(data) {
   const url = "/user";
   return axios.put(url, data);
 }
+
+export function createUserAPI(data) {
+  const url = "/user";
+  return axios.post(url, data);
+}
