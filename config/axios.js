@@ -1,7 +1,8 @@
 /* eslint-disable indent */
 import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-let baseURL = "http://<ip-address>:5000";
+let baseURL = "http://192.168.3.116:5000";
 
 switch(process.env.NODE_ENV) {
   case "staging":
@@ -19,30 +20,29 @@ switch(process.env.NODE_ENV) {
 
 axios.defaults.baseURL = baseURL;
 
-axios.interceptors.request.use(function(config) {
-  console.log("INSERIR O HEADER")
-  // const token = localStorage.getItem("token");
+axios.interceptors.request.use(async config => {
+  const token = await AsyncStorage.getItem('token');
 
-  // if (token) {
-  //   config.headers.Authorization = `Bearer ${token}`;
-  // }
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
 
   return config;
-}, function(error) {
+}, error => {
   console.error(error);
   return Promise.reject(error);
 });
 
 
-axios.interceptors.response.use(function(response) {
+axios.interceptors.response.use(response => {
   console.log(response);
   return response;
-}, function(error) {
-  console.log(error.message);
+}, async error => {
   if (error.response) {
     if (error.response.status === 401) {
       if (error.response.data.code === "token_not_valid") {
         console.error("Ops... Sua sessão expirou.")
+        await AsyncStorage.removeItem('token');
       }
     }
 

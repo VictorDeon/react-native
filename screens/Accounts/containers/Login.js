@@ -1,7 +1,7 @@
 import React, { Component } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LoginComponent } from "../components/Login";
 import { loginAPI } from "../api";
-import { loadingAlert, successAlert } from "../../../shared/alerts";
 
 class LoginContainer extends Component {
   constructor(props) {
@@ -11,12 +11,10 @@ class LoginContainer extends Component {
 
   __submit = async data => {
     const { navigation } = this.props;
-    // this.setState({ alert: loadingAlert("Enviando", "Por favor aguarde!") });
 
     try {
       const response = await loginAPI(data);
-      console.log(response);
-      // this.setState({ alert: successAlert("Enviado", "Autenticação realizada com sucesso!") });
+      await AsyncStorage.setItem('token', response.data.token)
       navigation.navigate('Profile', { user: response.data.user })
     } catch(error) {
       console.error(error);

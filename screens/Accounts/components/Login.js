@@ -34,7 +34,6 @@ export const LoginComponent = props => {
           </View>
         )}
       />
-      {alert ? alert : null}
     </ScrollView>
   );
 }
