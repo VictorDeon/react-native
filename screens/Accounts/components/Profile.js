@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, Button } from 'react-native';
 
 export const ProfileComponent = ({ route, navigation }) => {
-    const { name } = route.params;
+    const { user } = route.params;
     return (
       <View style={styles.container}>
-        <Text>Perfil do {name}</Text>
+        <Text>Perfil do {user.name}</Text>
         <Button title="Go back" onPress={() => navigation.goBack()} />
       </View>
     );

@@ -9,3 +9,11 @@ export const validateEmail = email => {
 
   return false;
 };
+
+export const isNumber = data => {
+  if (Number(data) !== data && data !== undefined) {
+    return false;
+  }
+
+  return true;
+};

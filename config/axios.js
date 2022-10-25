@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import axios from "axios";
 
-let baseURL = "http://0.0.0.0:5000";
+let baseURL = "http://<ip-address>:5000";
 
 switch(process.env.NODE_ENV) {
   case "staging":
@@ -35,13 +35,14 @@ axios.interceptors.request.use(function(config) {
 
 
 axios.interceptors.response.use(function(response) {
+  console.log(response);
   return response;
 }, function(error) {
+  console.log(error.message);
   if (error.response) {
     if (error.response.status === 401) {
       if (error.response.data.code === "token_not_valid") {
-        console.log("Ops... Sua sessão expirou.")
-        // errorAlert("Ops... Sua sessão expirou.");
+        console.error("Ops... Sua sessão expirou.")
       }
     }
 
