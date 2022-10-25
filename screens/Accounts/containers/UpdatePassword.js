@@ -8,14 +8,28 @@ import { SCREENS } from "../../../shared/constants";
 class UpdatePasswordContainer extends Component {
   __submit = async data => {
     const { navigation } = this.props;
-
-    try {
-      await updateUserAPI(data);
-      await AsyncStorage.removeItem('token');
-      navigation.navigate(SCREENS.LOGIN);
-    } catch(error) {
-      Alert.alert("Ops...", error, [], {cancelable: true})
-    }
+    Alert.alert(
+      "VWAuth", `Ao modificar a senha você terá que logar novamente.`,
+      [
+        {
+          text: "Cancelar",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress: async () => {
+            try {
+              await updateUserAPI(data);
+              await AsyncStorage.removeItem('token');
+              navigation.navigate(SCREENS.LOGIN);
+            } catch(error) {
+              Alert.alert("Ops...", error, [], {cancelable: true})
+            }
+          }
+        }
+      ], {cancelable: true}
+    );
   }
 
   render() {
