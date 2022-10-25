@@ -1,38 +1,35 @@
-import { StyleSheet, ScrollView, Button, View } from 'react-native';
-import { InputField } from "../../../shared/fields";
-import { validateCreateUser } from "../validator";
+import { StyleSheet, Text, View, Button, ScrollView } from 'react-native';
 import { Form, Field } from 'react-final-form';
+import { InputField } from "../../../shared/fields";
+import { validateUpdatePassword } from "../validator";
 
-export const CreateUserComponent = props => {
-  const { submit, navigation } = props;
+export const UpdatePasswordComponent = props => {
+  const { navigation, submit } = props;
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Text>Atualizar senha</Text>
       <Form
         onSubmit={data => submit(data)}
-        validate={validateCreateUser}
+        validate={validateUpdatePassword}
         render={({ handleSubmit, submitting, invalid }) => (
           <View style={styles.formGroup}>
             <Field
-              name="email"
-              placeholder="Email de autenticação"
-              component={InputField}
-            />
-
-            <Field
-              name="name"
-              placeholder="Nome do usuário"
+              secureTextEntry
+              name="old_password"
+              placeholder="Antiga senha"
               component={InputField}
             />
 
             <Field
               secureTextEntry
-              name="password"
-              placeholder="Senha de autenticação"
+              name="new_password"
+              placeholder="Nova senha"
               component={InputField}
             />
 
             <Button
-              title="Criar"
+              title="Atualizar"
               onPress={handleSubmit}
               disabled={submitting || invalid}
             />
@@ -51,8 +48,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  formGroup: {
-    paddingLeft: 50,
-    paddingRight: 50
-  }
 });

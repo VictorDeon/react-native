@@ -11,7 +11,7 @@ export const ProfileComponent = props => {
       <Text>CPF: {user.cpf}</Text>
       <Text>Telefone: {user.phone}</Text>
       <Button title="Atualizar dados" onPress={() => navigation.navigate(SCREENS.UPDATE_USER, { user })} />
-      <Button title="Atualizar senha" onPress={() => console.log("atualizar senha")} />
+      <Button title="Atualizar senha" onPress={() => navigation.navigate(SCREENS.UPDATE_PASSWORD, { user })} />
       <Button title="Desativar usuário" onPress={() => console.log("desativar usuário")} />
       <Button title="Sair" onPress={logout} />
     </View>
