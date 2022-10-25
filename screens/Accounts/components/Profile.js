@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View, Button } from 'react-native';
+import { SCREENS } from "../../../shared/constants";
 
 export const ProfileComponent = props => {
   const { route, navigation, logout } = props;
@@ -6,8 +7,10 @@ export const ProfileComponent = props => {
   return (
     <View style={styles.container}>
       <Text>Perfil do {user.name}</Text>
-      <Button title="Go back" onPress={() => navigation.goBack()} />
-      <Button title="Logout" onPress={logout} />
+      <Button title="Atualizar dados" onPress={() => navigation.navigate(SCREENS.UPDATE_USER, { user })} />
+      <Button title="Atualizar senha" onPress={() => console.log("atualizar senha")} />
+      <Button title="Desativar usuário" onPress={() => console.log("desativar usuário")} />
+      <Button title="Sair" onPress={logout} />
     </View>
   );
 }

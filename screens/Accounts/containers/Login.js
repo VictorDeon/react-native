@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from "react-native";
 import { LoginComponent } from "../components/Login";
 import { loginAPI } from "../api";
+import { SCREENS } from "../../../shared/constants";
 
 class LoginContainer extends Component {
   __submit = async data => {
@@ -11,15 +12,13 @@ class LoginContainer extends Component {
     try {
       const response = await loginAPI(data);
       await AsyncStorage.setItem('token', response.data.token);
-      navigation.navigate('Profile', { user: response.data.user });
+      navigation.navigate(SCREENS.PROFILE, { user: response.data.user });
       Alert.alert(
         "VWAuth", `Bem vindo ${response.data.user.name}!`,
         [], {cancelable: true}
       );
     } catch(error) {
-      console.error(error);
-    } finally {
-      this.setState({ alert: null });
+      Alert.alert("Ops...", error, [], {cancelable: true})
     }
   }
 

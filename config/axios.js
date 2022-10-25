@@ -24,7 +24,7 @@ axios.interceptors.request.use(async config => {
   const token = await AsyncStorage.getItem('token');
 
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers.token = `Bearer ${token}`;
   }
 
   return config;
@@ -64,6 +64,7 @@ axios.interceptors.response.use(response => {
     return Promise.reject(new Error("Erro de conexão, verifique sua internet ou tente novamente mais tarde."));
   }
 
+  console.error(error);
   return Promise.reject(error);
 });
 

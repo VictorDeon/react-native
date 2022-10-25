@@ -17,3 +17,17 @@ export const validateLogin = values => {
 
   return errors;
 };
+
+export const validateUpdateUser = values => {
+  const errors = {};
+
+  if (!values.email) {
+    errors.email = 'Email é obrigatório.';
+  }
+
+  if (!validateEmail(values.email)) {
+    errors.email = 'Email inválido!'
+  }
+
+  return errors;
+}
