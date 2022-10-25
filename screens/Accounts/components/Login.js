@@ -4,7 +4,7 @@ import { validateLogin } from "../validator";
 import { Form, Field } from 'react-final-form';
 
 export const LoginComponent = props => {
-  const { submit, initialValues, alert } = props;
+  const { submit, initialValues } = props;
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Form
