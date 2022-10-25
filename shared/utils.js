@@ -1,15 +1,17 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export function getParams(navigation, param, paramDefault) {
   return JSON.stringify(navigation.getParam(param, paramDefault));
 }
 
-// export async function isAuthenticated() {
-//   const token = (await AsyncStorage.getItem('vwapp-token')) || '';
-//   if (token) {
-//     return true;
-//   }
+export async function isAuthenticated() {
+  const token = await AsyncStorage.getItem('token');
+  if (token) {
+    return true;
+  }
 
-//   return false;
-// }
+  return false;
+}
 
 export function hasPermission(requiredPermissions, userPermissions) {
   if (!requiredPermissions) {

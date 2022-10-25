@@ -7,6 +7,9 @@ export const ProfileComponent = props => {
   return (
     <View style={styles.container}>
       <Text>Perfil do {user.name}</Text>
+      <Text>Email: {user.email}</Text>
+      <Text>CPF: {user.cpf}</Text>
+      <Text>Telefone: {user.phone}</Text>
       <Button title="Atualizar dados" onPress={() => navigation.navigate(SCREENS.UPDATE_USER, { user })} />
       <Button title="Atualizar senha" onPress={() => console.log("atualizar senha")} />
       <Button title="Desativar usuário" onPress={() => console.log("desativar usuário")} />
@@ -20,6 +23,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
   },
 });
