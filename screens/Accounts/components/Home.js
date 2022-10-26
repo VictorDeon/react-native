@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Text } from "react-native";
 
-class CreateUser extends Component {
+class Home extends Component {
   render() {
     return (
-      <Text>Criar usuário</Text>
+      <Text>Ola mundo!</Text>
     )
   }
 }
 
-export default CreateUser;
+export default Home;

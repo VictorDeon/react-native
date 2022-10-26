@@ -1,43 +1,64 @@
+import React, { Component } from 'react';
 import { StyleSheet, ScrollView, Button, View } from 'react-native';
-import { InputField } from "../../../shared/fields";
+import { InputField } from "../../../shared/fields/InputField";
 import { validateLogin } from "../validator";
 import { Form, Field } from 'react-final-form';
-import { SCREENS } from '../../../shared/constants';
 
-export const LoginComponent = props => {
-  const { submit, initialValues, navigation } = props;
-  return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Form
-        onSubmit={data => submit(data)}
-        initialValues={initialValues}
-        validate={validateLogin}
-        render={({ handleSubmit, submitting, invalid }) => (
-          <View style={styles.formGroup}>
-            <Field
-              name="email"
-              placeholder="Email de autenticação"
-              component={InputField}
-            />
+class LoginComponet extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {user: null}
+  }
 
-            <Field
-              secureTextEntry
-              name="password"
-              placeholder="Senha"
-              component={InputField}
-            />
+  submit = async data => {
+    const { navigation } = this.props;
+    // Enviou os dados para o servidor via REST e recebeu de volta os dados do usuário e token
+    this.setState({
+      token: "...",
+      user: {
+        name: "Fulano de Tal",
+        username: data.username,
+        type: "Professor",
+        cpf: "123456789",
+        email: "fulano@gmail.com"
+      }
+    })
+    navigation.navigate('Home', { user: this.state.user })
+  }
 
-            <Button
-              title="Entrar"
-              onPress={handleSubmit}
-              disabled={submitting || invalid}
-            />
-          </View>
-        )}
-      />
-      <Button style={styles.button} title="Criar usuário" onPress={() => navigation.navigate(SCREENS.CREATE_USER)} />
-    </ScrollView>
-  );
+  render() {
+    const { navigation } = this.props;
+
+    return (
+      <ScrollView contentContainerStyle={styles.container}>
+        <Form
+          onSubmit={data => submit(data)}
+          validate={validateLogin}
+          render={({ handleSubmit, submitting, invalid }) => (
+            <View style={styles.formGroup}>
+              <Field
+                name="username"
+                component={InputField}
+              />
+
+              <Field
+                secureTextEntry
+                name="password"
+                component={InputField}
+              />
+
+              <Button
+                title="Entrar"
+                onPress={handleSubmit}
+                disabled={submitting || invalid}
+              />
+            </View>
+          )}
+        />
+        <Button style={styles.button} title="Criar usuário" onPress={() => navigation.navigate('CreateUser')} />
+      </ScrollView>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -50,8 +71,7 @@ const styles = StyleSheet.create({
   formGroup: {
     paddingLeft: 50,
     paddingRight: 50
-  },
-  button: {
-    marginTop: 20
   }
 });
+
+export default LoginComponet;
