@@ -4,14 +4,29 @@ import { Alert } from "react-native";
 import { ProfileComponent } from "../components/Profile";
 import { SCREENS } from "../../../shared/constants";
 import { isAuthenticated } from "../../../shared/utils";
-import { updateUserAPI } from "../api";
+import { updateUserAPI, listUserAPI } from "../api";
 
 class ProfileContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { users: [] };
+  }
+
   async componentDidMount() {
-    const { navigation } = this.props;
+    const { navigation, route } = this.props;
+    const { user } = route.params;
     if (!await isAuthenticated()) {
       Alert.alert("OPS...", "Você precisa está autenticado para acessar essa página!", [], {cancelable: true});
       navigation.navigate(SCREENS.LOGIN, { user: response.data.user });
+    }
+
+    if (user && user.is_staff) {
+      try {
+        const response = await listUserAPI();
+        this.setState({ users: response.data.map(item => { return { name: item.name } }) });
+      } catch(error) {
+        Alert.alert("Ops...", error, [], {cancelable: true})
+      }
     }
   }
 
@@ -61,6 +76,7 @@ class ProfileContainer extends Component {
     return (
       <ProfileComponent
         {...this.props}
+        {...this.state}
         logout={this.__logout}
         desactivate={this.__desactivate}
       />

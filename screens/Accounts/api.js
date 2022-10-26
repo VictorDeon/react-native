@@ -14,3 +14,8 @@ export function createUserAPI(data) {
   const url = "/user";
   return axios.post(url, data);
 }
+
+export function listUserAPI() {
+  const url = "/users";
+  return axios.get(url);
+}
