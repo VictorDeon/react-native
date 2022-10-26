@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView, Button, View } from 'react-native';
+import { StyleSheet, ScrollView, TouchableOpacity, Text, View } from 'react-native';
 import { InputField } from "../../../shared/fields/InputField";
 import { validateLogin } from "../validator";
 import { Form, Field } from 'react-final-form';
@@ -12,6 +12,7 @@ class LoginComponet extends Component {
 
   submit = async data => {
     const { navigation } = this.props;
+    console.log(data);
     // Enviou os dados para o servidor via REST e recebeu de volta os dados do usuário e token
     this.setState({
       token: "...",
@@ -28,11 +29,13 @@ class LoginComponet extends Component {
 
   render() {
     const { navigation } = this.props;
+    const EnterText = "Entrar";
+    const CreateUserText = "Criar Usuário";
 
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <Form
-          onSubmit={data => submit(data)}
+          onSubmit={data => this.submit(data)}
           validate={validateLogin}
           render={({ handleSubmit, submitting, invalid }) => (
             <View style={styles.formGroup}>
@@ -47,15 +50,18 @@ class LoginComponet extends Component {
                 component={InputField}
               />
 
-              <Button
-                title="Entrar"
+              <TouchableOpacity
                 onPress={handleSubmit}
-                disabled={submitting || invalid}
-              />
+                style={styles.loginBtn}
+                disabled={submitting || invalid}>
+                <Text>{EnterText}</Text>
+              </TouchableOpacity>
             </View>
           )}
         />
-        <Button style={styles.button} title="Criar usuário" onPress={() => navigation.navigate('CreateUser')} />
+        <TouchableOpacity onPress={() => navigation.navigate('CreateUser')}>
+          <Text>{CreateUserText}</Text>
+        </TouchableOpacity>
       </ScrollView>
     )
   }
@@ -67,6 +73,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  loginBtn: {
+    color: "red",
   },
   formGroup: {
     paddingLeft: 50,
