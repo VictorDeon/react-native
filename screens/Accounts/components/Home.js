@@ -3,8 +3,11 @@ import { Text } from "react-native";
 
 class Home extends Component {
   render() {
+    const { route } = this.props;
+    const { user } = route.params;
+
     return (
-      <Text>Ola mundo!</Text>
+      <Text>Bem vindo! {user.name}</Text>
     )
   }
 }

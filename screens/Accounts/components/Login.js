@@ -3,28 +3,14 @@ import { StyleSheet, ScrollView, TouchableOpacity, Text, View } from 'react-nati
 import { InputField } from "../../../shared/fields/InputField";
 import { validateLogin } from "../validator";
 import { Form, Field } from 'react-final-form';
+import { loginAPI } from "../api";
 
 class LoginComponet extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {user: null}
-  }
-
   submit = async data => {
     const { navigation } = this.props;
     console.log(data);
-    // Enviou os dados para o servidor via REST e recebeu de volta os dados do usuário e token
-    this.setState({
-      token: "...",
-      user: {
-        name: "Fulano de Tal",
-        username: data.username,
-        type: "Professor",
-        cpf: "123456789",
-        email: "fulano@gmail.com"
-      }
-    })
-    navigation.navigate('Home', { user: this.state.user })
+    const response = await loginAPI(data)
+    navigation.navigate('Home', { user: response.data.user })
   }
 
   render() {
@@ -37,27 +23,30 @@ class LoginComponet extends Component {
         <Form
           onSubmit={data => this.submit(data)}
           validate={validateLogin}
-          render={({ handleSubmit, submitting, invalid }) => (
-            <View style={styles.formGroup}>
-              <Field
-                name="username"
-                component={InputField}
-              />
+          render={({ handleSubmit, submitting, invalid }) => {
+            return (
+              <View style={styles.formGroup}>
+                <Field
+                  name="username"
+                  placeholder="Usuário"
+                  component={InputField}
+                />
 
-              <Field
-                secureTextEntry
-                name="password"
-                component={InputField}
-              />
+                <Field
+                  secureTextEntry
+                  name="password"
+                  placeholder="Senha"
+                  component={InputField}
+                />
 
-              <TouchableOpacity
-                onPress={handleSubmit}
-                style={styles.loginBtn}
-                disabled={submitting || invalid}>
-                <Text>{EnterText}</Text>
-              </TouchableOpacity>
-            </View>
-          )}
+                <TouchableOpacity
+                  onPress={handleSubmit}
+                  style={submitting || invalid ? styles.disabledBtn : styles.button}
+                  disabled={submitting || invalid}>
+                  <Text style={styles.btnText}>{EnterText}</Text>
+                </TouchableOpacity>
+              </View>)
+            }}
         />
         <TouchableOpacity onPress={() => navigation.navigate('CreateUser')}>
           <Text>{CreateUserText}</Text>
@@ -74,8 +63,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  loginBtn: {
-    color: "red",
+  btnText: {
+    color: "white",
+  },
+  button: {
+    backgroundColor: "green",
+    padding: 10
+  },
+  disabledBtn: {
+    backgroundColor: "red",
+    padding: 10
   },
   formGroup: {
     paddingLeft: 50,
