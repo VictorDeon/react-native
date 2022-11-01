@@ -5,6 +5,10 @@ export const validateLogin = values => {
     errors.username = 'O usuário é obrigatório.';
   }
 
+  if (values.type == "banana") {
+    errors.type = "O tipo é obrigatório";
+  }
+
   if (!values.password) {
     errors.password = 'Senha deve ser passado.';
   }

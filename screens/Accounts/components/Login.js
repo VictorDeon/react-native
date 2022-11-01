@@ -1,31 +1,39 @@
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView, TouchableOpacity, Text, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 import { InputField } from "../../../shared/fields/InputField";
+import { SelectField } from '../../../shared/fields/SelectField';
 import { validateLogin } from "../validator";
 import { Form, Field } from 'react-final-form';
-import { loginAPI } from "../api";
 
 class LoginComponet extends Component {
   submit = async data => {
-    const { navigation } = this.props;
     console.log(data);
-    const response = await loginAPI(data)
-    navigation.navigate('Home', { user: response.data.user })
   }
 
   render() {
-    const { navigation } = this.props;
     const EnterText = "Entrar";
-    const CreateUserText = "Criar Usuário";
 
     return (
-      <ScrollView contentContainerStyle={styles.container}>
+      <View contentContainerStyle={styles.container}>
         <Form
           onSubmit={data => this.submit(data)}
           validate={validateLogin}
           render={({ handleSubmit, submitting, invalid }) => {
             return (
               <View style={styles.formGroup}>
+                <Field
+                  name="type"
+                  placeholder="Selecione o tipo de usuário"
+                  disabled={false}
+                  options={[
+                    {label: 'Maça', value: 'maça'},
+                    {label: 'Banana', value: 'banana'},
+                    {label: 'Pera', value: 'pera'},
+                    {label: 'Abacaxi', value: 'abacaxi'}
+                  ]}
+                  component={SelectField}
+                />
+
                 <Field
                   name="username"
                   placeholder="Usuário"
@@ -48,10 +56,7 @@ class LoginComponet extends Component {
               </View>)
             }}
         />
-        <TouchableOpacity onPress={() => navigation.navigate('CreateUser')}>
-          <Text>{CreateUserText}</Text>
-        </TouchableOpacity>
-      </ScrollView>
+      </View>
     )
   }
 }
