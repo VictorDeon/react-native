@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 import { InputField } from "../../../shared/fields/InputField";
 import { SelectField } from '../../../shared/fields/SelectField';
+import { RadioField } from "../../../shared/fields/RadioField";
+import { CheckboxField } from "../../../shared/fields/CheckboxField";
 import { validateLogin } from "../validator";
 import { Form, Field } from 'react-final-form';
 
@@ -45,6 +47,21 @@ class LoginComponet extends Component {
                   name="password"
                   placeholder="Senha"
                   component={InputField}
+                />
+
+                <Field
+                  name="score"
+                  options={[
+                    {label: "Opção 01", value: 0},
+                    {label: "Opção 02", value: 2}
+                  ]}
+                  component={RadioField}
+                />
+
+                <Field
+                  name="remember"
+                  label="Lembrar-me"
+                  component={CheckboxField}
                 />
 
                 <TouchableOpacity

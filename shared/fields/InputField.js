@@ -8,6 +8,7 @@ export const InputField = field => {
 
   return (
     <View>
+      <Text style={styles.label}>{field.label}</Text>
       <TextInput
         {...field.input}
         placeholder={field.placeholder}
